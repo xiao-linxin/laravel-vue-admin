@@ -20,7 +20,7 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'roles' => array_map(function ($role) {
                 return $role['name'];
-            }, $this->roles),
+            }, $this->roles->toArray()),
             'permissions' => array_map(function ($permission) {
                 return $permission['name'];
             }, $this->getAllPermissions()->toArray()),
