@@ -9,10 +9,12 @@
 namespace App\Http\Controllers;
 
 use App\Laravue\JsonResponse;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\UserResource as UserResource;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * Class AuthController
@@ -52,5 +54,15 @@ class AuthController extends Controller
     private function guard()
     {
         return Auth::guard();
+    }
+
+    public function create(Request $request)
+    {
+        $param = $request->only('name', 'email', 'password');
+        User::create([
+            'name' => $param['name'],
+            'email' => $param['email'],
+            'password' => Hash::make($param['password']),
+        ]);
     }
 }
